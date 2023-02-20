@@ -104,4 +104,15 @@ public class UserServiceImpl implements UserService {
     public int update(HashMap param) {
         return userDao.update(param);
     }
+
+    /**
+     * 删除用户id
+     *
+     * @param ids id
+     * @return int
+     */
+    @Override
+    public int deleteUserByIds(Integer[] ids) {
+        return userDao.deleteUserByIds(ids);
+    }
 }

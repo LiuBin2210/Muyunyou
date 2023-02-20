@@ -169,4 +169,13 @@
         WHERE id=#{userId}
     </update>
 
+    <delete id="deleteUserByIds">
+        DELETE FROM user
+        WHERE id IN
+        <foreach collection="array" open="(" separator="," close=")" item="one">
+            #{one}
+        </foreach>
+        AND root=FALSE
+    </delete>
+
 </mapper>

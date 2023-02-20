@@ -79,4 +79,14 @@ public interface UserDao {
      * @return int
      */
     int update(HashMap param);
+
+
+    /**
+     * 删除用户id
+     *
+     * @param ids id
+     * @return int
+     */
+    int deleteUserByIds(Integer[] ids);
+
 }

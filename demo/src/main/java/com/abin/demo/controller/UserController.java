@@ -4,6 +4,7 @@ import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.dev33.satoken.annotation.SaMode;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.json.JSONUtil;
 import com.abin.demo.common.util.JsonUtils;
 import com.abin.demo.common.util.MD5Utils;
@@ -126,6 +127,24 @@ public class UserController {
         int rows = userService.update(param);
         if (rows == 1){
             StpUtil.logoutByLoginId(form.getUserId());
+        }
+        return R.ok().put("rows",rows);
+    }
+
+    @PostMapping("/deleteUserByIds")
+    @Operation(summary = "删除用户数据")
+    @SaCheckPermission(value = {"ROOT","USER:DELETE"}, mode = SaMode.OR)
+    public R delete(@Valid @RequestBody DeleteUserByIdsForm form){
+        int userId = StpUtil.getLoginIdAsInt();
+        if (ArrayUtil.contains(form.getIds(),userId)){
+            return R.error("不能删除自己的账户");
+        }
+        int rows = userService.deleteUserByIds(form.getIds());
+        if (rows > 0){
+            //把删除的用户踢下线
+            for (Integer id : form.getIds()){
+                StpUtil.logoutByLoginId(id);
+            }
         }
         return R.ok().put("rows",rows);
     }
