@@ -82,4 +82,16 @@ public class UserServiceImpl implements UserService {
         int length = (Integer) param.get("length");
         return new PageUtils(list, count, start, length);
     }
+
+    /**
+     * 插入
+     *
+     * @param user 用户
+     * @return int
+     */
+    @Override
+    public int insert(User user) {
+       return userDao.insert(user);
+
+    }
 }

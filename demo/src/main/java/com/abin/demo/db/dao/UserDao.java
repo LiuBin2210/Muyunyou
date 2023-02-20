@@ -56,5 +56,13 @@ public interface UserDao {
      */
     ArrayList<HashMap> searchUserByPage(HashMap param);
 
+    /**
+     * 搜索用户数量
+     *
+     * @param param 参数
+     * @return {@link Long}
+     */
     Long searchUserCount(HashMap param);
+
+    int insert(User user);
 }

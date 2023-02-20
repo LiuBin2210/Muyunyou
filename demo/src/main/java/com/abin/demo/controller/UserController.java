@@ -9,10 +9,7 @@ import com.abin.demo.common.util.JsonUtils;
 import com.abin.demo.common.util.MD5Utils;
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.common.util.R;
-import com.abin.demo.controller.form.LoginForm;
-import com.abin.demo.controller.form.SearchUserByPageForm;
-import com.abin.demo.controller.form.UpdatePasswordForm;
-import com.abin.demo.controller.form.UserForm;
+import com.abin.demo.controller.form.*;
 import com.abin.demo.db.pojo.User;
 import com.abin.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -108,7 +105,13 @@ public class UserController {
 
     @PostMapping("/insert")
     @Operation(summary = "添加用户")
-    public R insert(){
-        return R.ok();
+    @SaCheckPermission(value = {"ROOT","USER:INSERT"},mode = SaMode.OR)
+    public R insert(@Valid @RequestBody InsertUserForm form){
+        User user = JSONUtil.parse(form).toBean(User.class);
+        user.setStatus((byte)1);
+        user.setRole(JSONUtil.parseArray(form.getRole()).toString());
+        user.setCreateTime(new Date());
+        int rows = userService.insert(user);
+        return R.ok().put("rows",rows);
     }
 }

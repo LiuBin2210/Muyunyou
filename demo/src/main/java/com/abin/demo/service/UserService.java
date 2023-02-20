@@ -51,5 +51,13 @@ public interface UserService {
      */
     PageUtils searchUserPage(HashMap param);
 
+    /**
+     * 插入
+     *
+     * @param user 用户
+     * @return int
+     */
+    int insert(User user);
+
 
 }
