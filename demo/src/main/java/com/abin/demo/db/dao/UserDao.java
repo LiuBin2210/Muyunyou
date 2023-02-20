@@ -64,5 +64,19 @@ public interface UserDao {
      */
     Long searchUserCount(HashMap param);
 
+    /**
+     * 插入
+     *
+     * @param user 用户
+     * @return int
+     */
     int insert(User user);
+
+    /**
+     * 更新
+     *
+     * @param param 参数
+     * @return int
+     */
+    int update(HashMap param);
 }

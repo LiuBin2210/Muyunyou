@@ -92,6 +92,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public int insert(User user) {
        return userDao.insert(user);
+    }
 
+    /**
+     * 更新
+     *
+     * @param param 参数
+     * @return int
+     */
+    @Override
+    public int update(HashMap param) {
+        return userDao.update(param);
     }
 }

@@ -87,6 +87,7 @@ public class UserController {
         if (rows !=1){
             return R.error("密码修改失败!");
         }
+        StpUtil.logoutByLoginId(userId);
         return R.ok().put("rows",rows);
     }
 
@@ -112,6 +113,20 @@ public class UserController {
         user.setRole(JSONUtil.parseArray(form.getRole()).toString());
         user.setCreateTime(new Date());
         int rows = userService.insert(user);
+        return R.ok().put("rows",rows);
+    }
+
+    @PostMapping("/update")
+    @Operation(summary = "修改用户数据")
+    @SaCheckPermission(value = {"ROOT","USER:UPDATE"},mode = SaMode.OR )
+    public R update(@Valid @RequestBody UpdateUserForm form) throws Exception {
+        HashMap param = JSONUtil.parse(form).toBean(HashMap.class);
+        param.replace("role",JSONUtil.parseArray(form.getRole()).toString());
+        param.replace("password",MD5Utils.getMD5Str(form.getPassword()));
+        int rows = userService.update(param);
+        if (rows == 1){
+            StpUtil.logoutByLoginId(form.getUserId());
+        }
         return R.ok().put("rows",rows);
     }
 }
