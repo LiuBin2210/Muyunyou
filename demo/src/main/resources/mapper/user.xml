@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.abin.demo.db.dao.UserDao">
+    <select id="searchUserPermissions" parameterType="int" resultType="java.lang.String">
+        select DISTINCT  p.permission_name
+        from user u
+        join role r on JSON_CONTAINS(u.role,CAST(r.id AS char))
+        join permission p on JSON_CONTAINS(r.permissions,CAST(p.id AS  char ))
+        where u.id = #{userId}
+        and u.status = 1
+    </select>
+
+    <insert id="register" parameterType="com.abin.demo.db.pojo.User" useGeneratedKeys="true" keyProperty="id">
+        insert into
+            user(username,password,create_time,status,root,role)
+        values(#{username},#{password},#{createTime},#{status},#{root},#{role})
+    </insert>
+
+    <select id="login" parameterType="HashMap" resultType="java.lang.Integer">
+        select
+               id
+        from
+             user
+        where
+              username = #{username}
+          and password = #{password}
+        limit 1
+    </select>
+
+    <update id="updatePassword" parameterType="HashMap">
+        update user
+        set password = #{newPassword}
+        where id =#{userId}
+        and #{password} = #{password}
+    </update>
+
+    <select id="searchUserByPage" parameterType="HashMap" resultType="HashMap">
+        SELECT
+        DISTINCT u.id,
+        u.name,
+        u.sex,
+        u.tel,
+        u.email,
+        d.dept_name AS dept,
+        u.hiredate,
+        u.root,
+        u.status,
+        ( SELECT GROUP_CONCAT( role_name separator "," ) FROM role WHERE JSON_CONTAINS ( u.role, CONVERT ( id, CHAR ) ) ) AS roles
+        FROM user u
+        JOIN role r ON JSON_CONTAINS ( u.role, CONVERT ( r.id, CHAR ) )
+        LEFT JOIN dept d ON u.dept_id = d.id
+        WHERE 1=1
+        <if test="name!=null">
+            AND u.name LIKE "%${name}%"
+        </if>
+        <if test="sex!=null">
+            AND u.sex=#{sex}
+        </if>
+        <if test="role!=null">
+            AND r.role_name=#{role}
+        </if>
+        <if test="deptId!=null">
+            AND d.id=#{deptId}
+        </if>
+        <if test="status!=null">
+            AND u.status=#{status}
+        </if>
+        LIMIT #{start}, #{length}
+    </select>
+    <select id="searchUserCount" parameterType="HashMap" resultType="long">
+        SELECT
+        COUNT(DISTINCT u.id)
+        FROM user u
+        JOIN role r ON JSON_CONTAINS ( u.role, CONVERT ( r.id, CHAR ) )
+        WHERE 1=1
+        <if test="name!=null">
+            AND u.name LIKE "%${name}%"
+        </if>
+        <if test="sex!=null">
+            AND u.sex=#{sex}
+        </if>
+        <if test="role!=null">
+            AND r.role_name=#{role}
+        </if>
+        <if test="deptId!=null">
+            AND u.dept_id=#{deptId}
+        </if>
+        <if test="status!=null">
+            AND u.status=#{status}
+        </if>
+    </select>
+
+</mapper>
