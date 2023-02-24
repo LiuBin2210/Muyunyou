@@ -52,7 +52,7 @@ public class RoleController {
     public R insert(@Valid @RequestBody InsertRoleForm form){
         Role role = new Role();
         role.setRoleName(form.getRoleName());
-        role.setDefaultPermissions(JSONUtil.parseArray(form.getPermissions()).toString());
+        role.setPermissions(JSONUtil.parseArray(form.getPermissions()).toString());
         role.setDesc(form.getDesc());
         int rows = roleService.insert(role);
         return R.ok().put("rows",rows);

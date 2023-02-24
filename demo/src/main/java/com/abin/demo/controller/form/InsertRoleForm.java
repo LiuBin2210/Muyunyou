@@ -20,7 +20,7 @@ public class InsertRoleForm {
     @Schema(description = "角色名称")
     private String roleName;
 
-    @NotEmpty(message = "permission不能为空")
+    @NotEmpty(message = "permissions不能为空")
     @Schema(description = "权限不能为空")
     private Integer[] permissions;
 
