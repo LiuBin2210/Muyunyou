@@ -3,6 +3,7 @@ package com.abin.demo.service;
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.db.pojo.Role;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -30,4 +31,20 @@ public interface RoleService {
      * @return int
      */
     int insert(Role role);
+
+    /**
+     * 按角色id搜索用户id
+     *
+     * @param roleId 角色id
+     * @return {@link ArrayList}<{@link Integer}>
+     */
+    ArrayList<Integer> searchUserIdRoleId(int roleId);
+
+    /**
+     * 更新
+     *
+     * @param role 角色
+     * @return int
+     */
+    int update(Role role);
 }

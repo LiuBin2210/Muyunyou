@@ -46,4 +46,27 @@ public class RoleServiceImpl implements RoleService {
     public int insert(Role role) {
         return roleDao.insert(role);
     }
+
+
+    /**
+     * 搜索用户id角色id
+     *
+     * @param roleId 角色id
+     * @return {@link ArrayList}<{@link Integer}>
+     */
+    @Override
+    public ArrayList<Integer> searchUserIdRoleId(int roleId) {
+        return roleDao.searchUserIdRoleId(roleId);
+    }
+
+    /**
+     * 更新
+     *
+     * @param role 角色
+     * @return int
+     */
+    @Override
+    public int update(Role role) {
+        return roleDao.update(role);
+    }
 }

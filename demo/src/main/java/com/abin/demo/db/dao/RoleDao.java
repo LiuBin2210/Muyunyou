@@ -37,6 +37,21 @@ public interface RoleDao {
      */
     int insert(Role role);
 
+    /**
+     * 搜索用户id角色id
+     *
+     * @param roleId 角色id
+     * @return {@link ArrayList}<{@link Integer}>
+     */
+    ArrayList<Integer> searchUserIdRoleId(int roleId);
+
+    /**
+     * 更新
+     *
+     * @param role 角色
+     * @return int
+     */
+    int update(Role role);
 }
 
 

@@ -41,5 +41,20 @@
         </if>
     </insert>
 
+    <select id="searchUserIdRoleId" parameterType="int" resultType="int">
+        select
+            u.id
+        from role r
+        join user u on JSON_CONTAINS(u.role,convert(r.id,char ))
+        where r.id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.abin.demo.db.pojo.Role">
+        update role
+        set role_name = #{roleName},
+            `desc` =#{desc},
+            permissions = #{permissions}
+        where id=#{id} and id !=0
+    </update>
 
 </mapper>
