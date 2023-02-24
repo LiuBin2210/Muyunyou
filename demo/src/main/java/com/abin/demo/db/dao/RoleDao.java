@@ -52,6 +52,24 @@ public interface RoleDao {
      * @return int
      */
     int update(Role role);
+
+    /**
+     * 搜索可以删除
+     *
+     * @param ids id
+     * @return boolean
+     */
+    boolean searchCanDelete(Integer[] ids);
+
+    /**
+     * 根据id删除角色
+     *
+     * @param ids id
+     * @return int
+     */
+    int deleteRoleByIds(Integer[] ids);
+
+
 }
 
 

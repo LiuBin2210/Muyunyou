@@ -6,6 +6,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.json.JSONUtil;
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.common.util.R;
+import com.abin.demo.controller.form.DeleteRoleByIdsForm;
 import com.abin.demo.controller.form.InsertRoleForm;
 import com.abin.demo.controller.form.SearchRoleByPageForm;
 import com.abin.demo.controller.form.UpdateRoleForm;
@@ -76,6 +77,14 @@ public class RoleController {
                 StpUtil.logoutByLoginId(userId);
             }
         }
+        return R.ok().put("rows",rows);
+    }
+
+    @PostMapping("/deleteRoleByIds")
+    @Operation(summary = "删除角色记录")
+    @SaCheckPermission(value = {"ROOT","USER:DELETE"},mode = SaMode.OR)
+    public R deleteRoleByIds(@Valid @RequestBody DeleteRoleByIdsForm form){
+        int rows = roleService.deleteRoleByIds(form.getIds());
         return R.ok().put("rows",rows);
     }
 }

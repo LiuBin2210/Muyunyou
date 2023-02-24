@@ -3,6 +3,7 @@ package com.abin.demo.service.Impl;
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.db.dao.RoleDao;
 import com.abin.demo.db.pojo.Role;
+import com.abin.demo.exception.HandleException;
 import com.abin.demo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,19 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public int update(Role role) {
         return roleDao.update(role);
+    }
+
+    /**
+     * 根据id删除角色
+     *
+     * @param ids id
+     * @return int
+     */
+    @Override
+    public int deleteRoleByIds(Integer[] ids) {
+        if (!roleDao.searchCanDelete(ids)) {
+            throw new HandleException("无法删除关联用户的角色");
+        }
+        return roleDao.deleteRoleByIds(ids);
     }
 }

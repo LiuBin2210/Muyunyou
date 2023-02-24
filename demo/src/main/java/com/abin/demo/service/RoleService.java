@@ -47,4 +47,12 @@ public interface RoleService {
      * @return int
      */
     int update(Role role);
+
+    /**
+     * 根据id删除角色
+     *
+     * @param ids id
+     * @return int
+     */
+    int deleteRoleByIds(Integer[] ids);
 }
