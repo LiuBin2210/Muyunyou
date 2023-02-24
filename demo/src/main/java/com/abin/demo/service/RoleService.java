@@ -1,6 +1,7 @@
 package com.abin.demo.service;
 
 import com.abin.demo.common.util.PageUtils;
+import com.abin.demo.db.pojo.Role;
 
 import java.util.HashMap;
 
@@ -21,4 +22,12 @@ public interface RoleService {
      * @return {@link PageUtils}
      */
     PageUtils searchRoleByPage(HashMap param);
+
+    /**
+     * 插入
+     *
+     * @param role 角色
+     * @return int
+     */
+    int insert(Role role);
 }

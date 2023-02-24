@@ -32,4 +32,14 @@
         ) AS temp
     </select>
 
+    <insert id="insert" parameterType="com.abin.demo.db.pojo.Role">
+        INSERT INTO role
+        SET role_name=#{roleName},
+        permissions=#{permissions}
+        <if test="desc!=null">
+            ,`desc`=#{desc}
+        </if>
+    </insert>
+
+
 </mapper>

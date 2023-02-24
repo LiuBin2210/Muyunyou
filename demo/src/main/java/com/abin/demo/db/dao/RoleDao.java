@@ -1,5 +1,6 @@
 package com.abin.demo.db.dao;
 
+import com.abin.demo.db.pojo.Role;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -27,6 +28,15 @@ public interface RoleDao {
      * @return {@link Long}
      */
     Long searchRoleCount(HashMap param);
+
+    /**
+     * 插入
+     *
+     * @param role 角色
+     * @return int
+     */
+    int insert(Role role);
+
 }
 
 

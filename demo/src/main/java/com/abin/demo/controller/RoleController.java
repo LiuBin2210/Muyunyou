@@ -5,8 +5,11 @@ import cn.dev33.satoken.annotation.SaMode;
 import cn.hutool.json.JSONUtil;
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.common.util.R;
+import com.abin.demo.controller.form.InsertRoleForm;
 import com.abin.demo.controller.form.SearchRoleByPageForm;
+import com.abin.demo.db.pojo.Role;
 import com.abin.demo.service.RoleService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +34,7 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping("/searchRoleByPage")
-    @Schema(description = "查询用户角色")
+    @Operation(summary = "查询用户角色")
     @SaCheckPermission(value = {"ROOT","USER:SELECT"}, mode = SaMode.OR)
     public R searchRoleByPage(@Valid @RequestBody SearchRoleByPageForm form){
         int page = form.getPage();
@@ -41,5 +44,17 @@ public class RoleController {
         param.put("start",start);
         PageUtils pageUtils = roleService.searchRoleByPage(param);
         return R.ok().put("page",pageUtils);
+    }
+
+    @PostMapping("/insert")
+    @Operation(summary = "添加角色")
+    @SaCheckPermission(value = {"ROOT","USER:INSERT"},mode = SaMode.OR)
+    public R insert(@Valid @RequestBody InsertRoleForm form){
+        Role role = new Role();
+        role.setRoleName(form.getRoleName());
+        role.setDefaultPermissions(JSONUtil.parseArray(form.getPermissions()).toString());
+        role.setDesc(form.getDesc());
+        int rows = roleService.insert(role);
+        return R.ok().put("rows",rows);
     }
 }

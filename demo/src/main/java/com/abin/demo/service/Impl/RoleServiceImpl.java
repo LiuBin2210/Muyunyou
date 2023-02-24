@@ -2,6 +2,7 @@ package com.abin.demo.service.Impl;
 
 import com.abin.demo.common.util.PageUtils;
 import com.abin.demo.db.dao.RoleDao;
+import com.abin.demo.db.pojo.Role;
 import com.abin.demo.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,16 @@ public class RoleServiceImpl implements RoleService {
         int length = (Integer) param.get("length");
         return new PageUtils(list, count, start, length);
 
+    }
+
+    /**
+     * 插入
+     *
+     * @param role 角色
+     * @return int
+     */
+    @Override
+    public int insert(Role role) {
+        return roleDao.insert(role);
     }
 }
