@@ -1,5 +1,6 @@
 package com.abin.demo.db.dao;
 
+import com.abin.demo.db.pojo.Dept;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
@@ -29,5 +30,13 @@ public interface DeptDao {
      * @return long
      */
     long searchDeptCount(HashMap param);
+
+    /**
+     * 插入
+     *
+     * @param dept 部门
+     * @return int
+     */
+    int insert(Dept dept);
 
 }

@@ -1,6 +1,7 @@
 package com.abin.demo.service;
 
 import com.abin.demo.common.util.PageUtils;
+import com.abin.demo.db.pojo.Dept;
 
 import java.util.HashMap;
 
@@ -19,4 +20,12 @@ public interface DeptService {
      * @return {@link PageUtils}
      */
     PageUtils searchDeptByPage(HashMap param);
+
+    /**
+     * 插入
+     *
+     * @param dept 部门
+     * @return int
+     */
+    int insert(Dept dept);
 }

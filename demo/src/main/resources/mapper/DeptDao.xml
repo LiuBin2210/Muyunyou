@@ -30,4 +30,18 @@
             ) as temp
     </select>
 
+    <insert id="insert" parameterType="com.abin.demo.db.dao.DeptDao">
+        insert into dept
+        set dept_name =#{deptName}
+        <if test="tel !=null">
+            ,tel =#{tel}
+        </if>
+        <if test="email !=null">
+            ,email =#{email}
+        </if>
+        <if test="desc !=null">
+            ,`desc` =#{desc}
+        </if>
+    </insert>
+
 </mapper>

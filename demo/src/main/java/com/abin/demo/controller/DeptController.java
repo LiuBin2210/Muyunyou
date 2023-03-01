@@ -42,4 +42,6 @@ public class DeptController {
         PageUtils pageUtils = deptService.searchDeptByPage(param);
         return R.ok().put("page", pageUtils);
     }
+
+
 }
